@@ -2,7 +2,6 @@ package com.felipe.palma.desafioconcrete.ui.pullrequest;
 
 import com.felipe.palma.desafioconcrete.domain.response.PullRequestResponse;
 import com.felipe.palma.desafioconcrete.network.IServiceGithub;
-import com.felipe.palma.desafioconcrete.network.ServiceGithubImp;
 
 import java.util.List;
 
@@ -12,16 +11,17 @@ import java.util.List;
 public class PullRequestPresenter implements PullRequestContract.Presenter {
 
     private PullRequestContract.View view;
+    private IServiceGithub api;
 
-    public PullRequestPresenter(PullRequestContract.View view) {
+    public PullRequestPresenter(PullRequestContract.View view, IServiceGithub api) {
         this.view = view;
+        this.api = api;
     }
 
     @Override
     public void loadPullRequests(String owner, String repo) {
         this.view.showDialog();
-        ServiceGithubImp mServiceGithubImp = new ServiceGithubImp();
-        mServiceGithubImp.getPullRequests(owner, repo, new IServiceGithub.IServiceCallback<List<PullRequestResponse>>() {
+        api.getPullRequests(owner, repo, new IServiceGithub.IServiceCallback<List<PullRequestResponse>>() {
             @Override
             public void onSuccess(List<PullRequestResponse> pullRequestResponse) {
                 view.showPullRequests(pullRequestResponse);

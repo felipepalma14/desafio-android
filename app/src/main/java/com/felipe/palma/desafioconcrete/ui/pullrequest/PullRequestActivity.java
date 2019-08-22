@@ -1,12 +1,5 @@
 package com.felipe.palma.desafioconcrete.ui.pullrequest;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,20 +10,23 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.felipe.palma.desafioconcrete.R;
-import com.felipe.palma.desafioconcrete.domain.model.Item;
 import com.felipe.palma.desafioconcrete.domain.response.PullRequestResponse;
+import com.felipe.palma.desafioconcrete.network.ServiceGithubImp;
 import com.felipe.palma.desafioconcrete.ui.adapter.AnimationItem;
-import com.felipe.palma.desafioconcrete.ui.adapter.InfiniteScrollListener;
 import com.felipe.palma.desafioconcrete.ui.adapter.PullRequestAdapter;
 import com.felipe.palma.desafioconcrete.ui.adapter.RecyclerItemClickListener;
-import com.felipe.palma.desafioconcrete.ui.adapter.RepositoryAdapter;
 import com.felipe.palma.desafioconcrete.ui.adapter.decoration.ItemOffsetDecoration;
 import com.felipe.palma.desafioconcrete.ui.repository.RepositoriesActivity;
-import com.felipe.palma.desafioconcrete.ui.repository.RepositoriesPresenter;
 import com.felipe.palma.desafioconcrete.utils.Config;
 
 import java.util.ArrayList;
@@ -79,7 +75,7 @@ public class PullRequestActivity extends AppCompatActivity implements PullReques
 
 
     private void setupPresenter() {
-        mPresenter = new PullRequestPresenter(this);
+        mPresenter = new PullRequestPresenter(this, new ServiceGithubImp());
         mPresenter.loadPullRequests(this.owner,this.repo);
     }
 
